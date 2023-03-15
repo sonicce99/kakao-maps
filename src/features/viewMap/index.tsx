@@ -1,9 +1,10 @@
 import React, { memo, useEffect, useRef } from "react";
 import styled from "styled-components";
+import { useAppDispatch } from "../../app/hooks";
 
-const { kakao } = window;
-
+// 지도 이동시키기
 const Map: React.FC<Props> = ({ center, size, level }) => {
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -13,9 +14,9 @@ const Map: React.FC<Props> = ({ center, size, level }) => {
         level,
       };
 
-      new kakao.maps.Map(ref.current, options);
+      const map = new kakao.maps.Map(ref.current, options);
     }
-  }, [center, level, ref]);
+  }, [center, dispatch, level, ref]);
 
   return <Box ref={ref} width={size.width} height={size.height} />;
 };
