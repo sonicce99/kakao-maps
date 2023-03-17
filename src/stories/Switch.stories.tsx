@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import Switch from "../features/mapTypeControl/Switch";
+import Switch from "../features/control/mapTypeControl/Switch";
 import { configureStore, createSlice } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import { ReactNode } from "react";

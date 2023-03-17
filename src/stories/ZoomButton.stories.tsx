@@ -1,5 +1,5 @@
 import { ComponentStory, ComponentMeta } from "@storybook/react";
-import ZoomButton from "../features/zoomControl/ZoomButton";
+import ZoomButton from "../features/control/zoomControl/ZoomButton";
 
 export default {
   title: "Kakao-maps/Button",
