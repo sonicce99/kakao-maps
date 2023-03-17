@@ -1,8 +1,8 @@
 import React from "react";
 import styled from "styled-components";
-import { useAppDispatch } from "../../app/hooks";
+import { useAppDispatch } from "../../../app/hooks";
 import ZoomButton from "./ZoomButton";
-import { decreaseLevel, increaseLevel } from "../viewMap/mapSlice";
+import { decreaseLevel, increaseLevel } from "../../viewMap/mapSlice";
 
 // 지도의 level을 컨드롤 할 수 있는 컴포넌트
 const ZoomControl = () => {

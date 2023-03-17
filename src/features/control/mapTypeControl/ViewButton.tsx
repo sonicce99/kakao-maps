@@ -28,6 +28,5 @@ const Button = styled.button<StyleProps>`
   height: 32px;
 
   cursor: pointer;
-  border: none;
   border-radius: 3px;
 `;

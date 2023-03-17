@@ -1,7 +1,7 @@
 import React, { memo } from "react";
 import styled from "styled-components";
-import { useAppDispatch, useAppSelector } from "../../app/hooks";
-import { selectMaptype, showRoadmap, showSkymap } from "../viewMap/mapSlice";
+import { useAppDispatch, useAppSelector } from "../../../app/hooks";
+import { selectMaptype, showRoadmap, showSkymap } from "../../viewMap/mapSlice";
 import ViewButton from "./ViewButton";
 
 const Switch = () => {
