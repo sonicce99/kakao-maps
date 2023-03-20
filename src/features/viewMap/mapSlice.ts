@@ -3,10 +3,16 @@ import { RootState } from "../../app/store";
 
 type SliceState = {
   level: number;
+  latitude: number;
+  longitude: number;
+  maptype: boolean;
 };
 
 const initialState: SliceState = {
   level: 3,
+  latitude: 0,
+  longitude: 0,
+  maptype: true,
 };
 
 const slice = createSlice({
@@ -25,6 +31,26 @@ const slice = createSlice({
       if (state.level > 1) {
         state.level--;
       }
+    },
+
+    // 위도 설정
+    setLatitude(state, { payload }: PayloadAction<number>) {
+      state.latitude = payload;
+    },
+
+    // 경도 설정
+    setLongitude(state, { payload }: PayloadAction<number>) {
+      state.longitude = payload;
+    },
+
+    // 지도뷰 설정
+    showRoadmap(state) {
+      state.maptype = true;
+    },
+
+    // 스카이뷰 설정
+    showSkymap(state) {
+      state.maptype = false;
     },
   },
   extraReducers: (builder) => {
@@ -49,7 +75,18 @@ const slice = createSlice({
   },
 });
 
-export const { logout, increaseLevel, decreaseLevel } = slice.actions;
+export const {
+  logout,
+  increaseLevel,
+  decreaseLevel,
+  setLatitude,
+  setLongitude,
+  showRoadmap,
+  showSkymap,
+} = slice.actions;
 export default slice.reducer;
 
 export const selectLevel = (state: RootState) => state.mapSlice.level;
+export const selectLatitude = (state: RootState) => state.mapSlice.latitude;
+export const selectLongitude = (state: RootState) => state.mapSlice.longitude;
+export const selectMaptype = (state: RootState) => state.mapSlice.maptype;
