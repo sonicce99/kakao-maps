@@ -6,6 +6,10 @@ type SliceState = {
   latitude: number;
   longitude: number;
   maptype: boolean;
+  trafficState: boolean;
+  usedistrictState: boolean;
+  terrainState: boolean;
+  bikeState: boolean;
 };
 
 const initialState: SliceState = {
@@ -13,6 +17,11 @@ const initialState: SliceState = {
   latitude: 0,
   longitude: 0,
   maptype: true,
+
+  trafficState: false,
+  usedistrictState: false,
+  terrainState: false,
+  bikeState: false,
 };
 
 const slice = createSlice({
@@ -33,6 +42,11 @@ const slice = createSlice({
       }
     },
 
+    // 맵 level 설정
+    setLevel(state, { payload }: PayloadAction<number>) {
+      state.level = payload;
+    },
+
     // 위도 설정
     setLatitude(state, { payload }: PayloadAction<number>) {
       state.latitude = payload;
@@ -51,6 +65,26 @@ const slice = createSlice({
     // 스카이뷰 설정
     showSkymap(state) {
       state.maptype = false;
+    },
+
+    // 교통정보 설정
+    handleTrafficState(state) {
+      state.trafficState = !state.trafficState;
+    },
+
+    // 지적편집도 설정
+    handleUsedistrictState(state) {
+      state.usedistrictState = !state.usedistrictState;
+    },
+
+    // 지형도 설정
+    handleTerrainState(state) {
+      state.terrainState = !state.terrainState;
+    },
+
+    // 자전거 설정
+    handleBikeState(state) {
+      state.bikeState = !state.bikeState;
     },
   },
   extraReducers: (builder) => {
@@ -79,10 +113,15 @@ export const {
   logout,
   increaseLevel,
   decreaseLevel,
+  setLevel,
   setLatitude,
   setLongitude,
   showRoadmap,
   showSkymap,
+  handleTrafficState,
+  handleUsedistrictState,
+  handleTerrainState,
+  handleBikeState,
 } = slice.actions;
 export default slice.reducer;
 
@@ -90,3 +129,11 @@ export const selectLevel = (state: RootState) => state.mapSlice.level;
 export const selectLatitude = (state: RootState) => state.mapSlice.latitude;
 export const selectLongitude = (state: RootState) => state.mapSlice.longitude;
 export const selectMaptype = (state: RootState) => state.mapSlice.maptype;
+
+export const selectTrafficState = (state: RootState) =>
+  state.mapSlice.trafficState;
+export const selectUsedistrictState = (state: RootState) =>
+  state.mapSlice.usedistrictState;
+export const selectTerrainState = (state: RootState) =>
+  state.mapSlice.terrainState;
+export const selectBikeState = (state: RootState) => state.mapSlice.bikeState;

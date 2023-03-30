@@ -1,14 +1,20 @@
+import { memo } from "react";
 import styled from "styled-components";
 
-const LayerButton = () => {
-  return <Button></Button>;
+interface Props {
+  handleIsOn: () => void;
+}
+
+const LayerButton: React.FC<Props> = ({ handleIsOn }) => {
+  return <Button onClick={handleIsOn} />;
 };
 
-export default LayerButton;
+export default memo(LayerButton);
 
 const Button = styled.button`
-  width: 38px;
-  height: 38px;
+  width: 37px;
+  height: 37px;
+  border-radius: 3px;
   background-image: url(${({ theme }) => theme.url.sign});
   background-repeat: no-repeat;
   background-position: left -52px bottom -104px;

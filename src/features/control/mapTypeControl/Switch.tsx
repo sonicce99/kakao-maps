@@ -23,11 +23,11 @@ const Switch = () => {
 export default memo(Switch);
 
 const Container = styled.div`
-  width: 96px;
+  width: 100px;
   height: 32px;
   background-color: white;
   border-radius: 5px;
-  padding: 2px;
+  padding: 18px 0;
   box-shadow: rgba(0, 0, 0, 0.15) 0px 2px 2px 0px;
 
   display: flex;

@@ -17,6 +17,11 @@ const GlobalStyle = createGlobalStyle`
   button {
       border: none;
   }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
 `;
 
 export default GlobalStyle;
