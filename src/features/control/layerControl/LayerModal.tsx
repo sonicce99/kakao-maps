@@ -1,30 +1,10 @@
 import styled, { css } from "styled-components";
 import { useAppDispatch, useAppSelector } from "../../../app/hooks";
-import {
-  handleBikeState,
-  handleTerrainState,
-  handleTrafficState,
-  handleUsedistrictState,
-  selectBikeState,
-  selectTerrainState,
-  selectTrafficState,
-  selectUsedistrictState,
-} from "../../viewMap/mapSlice";
+import { handleMapTypeId, selectMapTypeIds } from "../../viewMap/mapSlice";
 
 const LayerModal: React.FC = () => {
   const dispatch = useAppDispatch();
-
-  // 교통정보 상태
-  const trafficState = useAppSelector(selectTrafficState);
-
-  // 지적편집도 상태
-  const usedistrictState = useAppSelector(selectUsedistrictState);
-
-  // 지형도 상태
-  const terrainState = useAppSelector(selectTerrainState);
-
-  // 자전거 상태
-  const bikeState = useAppSelector(selectBikeState);
+  const mapTypeIds = useAppSelector(selectMapTypeIds);
 
   return (
     <Container>
@@ -32,30 +12,51 @@ const LayerModal: React.FC = () => {
       <Ul>
         <Li>
           <Traffic
-            isOn={trafficState}
-            onClick={() => dispatch(handleTrafficState())}
+            isOn={
+              mapTypeIds.includes(kakao.maps.MapTypeId.TRAFFIC) ? true : false
+            }
+            onClick={() =>
+              dispatch(handleMapTypeId(kakao.maps.MapTypeId.TRAFFIC))
+            }
           />
           <Text>교통정보</Text>
         </Li>
 
         <Li>
           <Usedistrict
-            isOn={usedistrictState}
-            onClick={() => dispatch(handleUsedistrictState())}
+            isOn={
+              mapTypeIds.includes(kakao.maps.MapTypeId.USE_DISTRICT)
+                ? true
+                : false
+            }
+            onClick={() =>
+              dispatch(handleMapTypeId(kakao.maps.MapTypeId.USE_DISTRICT))
+            }
           />
           <Text>지적편집도</Text>
         </Li>
 
         <Li>
           <Terrain
-            isOn={terrainState}
-            onClick={() => dispatch(handleTerrainState())}
+            isOn={
+              mapTypeIds.includes(kakao.maps.MapTypeId.TERRAIN) ? true : false
+            }
+            onClick={() =>
+              dispatch(handleMapTypeId(kakao.maps.MapTypeId.TERRAIN))
+            }
           />
           <Text>지형도</Text>
         </Li>
 
         <Li>
-          <Bike isOn={bikeState} onClick={() => dispatch(handleBikeState())} />
+          <Bike
+            isOn={
+              mapTypeIds.includes(kakao.maps.MapTypeId.BICYCLE) ? true : false
+            }
+            onClick={() =>
+              dispatch(handleMapTypeId(kakao.maps.MapTypeId.BICYCLE))
+            }
+          />
           <Text>자전거</Text>
         </Li>
       </Ul>

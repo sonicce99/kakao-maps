@@ -6,10 +6,8 @@ type SliceState = {
   latitude: number;
   longitude: number;
   maptype: boolean;
-  trafficState: boolean;
-  usedistrictState: boolean;
-  terrainState: boolean;
-  bikeState: boolean;
+  roadViewState: boolean;
+  mapTypeIds: kakao.maps.MapTypeId[];
 };
 
 const initialState: SliceState = {
@@ -17,11 +15,8 @@ const initialState: SliceState = {
   latitude: 0,
   longitude: 0,
   maptype: true,
-
-  trafficState: false,
-  usedistrictState: false,
-  terrainState: false,
-  bikeState: false,
+  roadViewState: false,
+  mapTypeIds: [],
 };
 
 const slice = createSlice({
@@ -67,24 +62,22 @@ const slice = createSlice({
       state.maptype = false;
     },
 
-    // 교통정보 설정
-    handleTrafficState(state) {
-      state.trafficState = !state.trafficState;
+    handleMapTypeId(state, { payload }) {
+      const isIncludes = state.mapTypeIds.includes(payload) ? true : false;
+
+      if (!isIncludes) {
+        state.mapTypeIds = [...state.mapTypeIds, payload];
+      } else {
+        const newState = state.mapTypeIds.filter(
+          (mapTypeId) => mapTypeId !== payload
+        );
+        state.mapTypeIds = newState;
+      }
     },
 
-    // 지적편집도 설정
-    handleUsedistrictState(state) {
-      state.usedistrictState = !state.usedistrictState;
-    },
-
-    // 지형도 설정
-    handleTerrainState(state) {
-      state.terrainState = !state.terrainState;
-    },
-
-    // 자전거 설정
-    handleBikeState(state) {
-      state.bikeState = !state.bikeState;
+    // 로드뷰 설정
+    handleRoadViewState(state) {
+      state.roadViewState = !state.roadViewState;
     },
   },
   extraReducers: (builder) => {
@@ -118,10 +111,8 @@ export const {
   setLongitude,
   showRoadmap,
   showSkymap,
-  handleTrafficState,
-  handleUsedistrictState,
-  handleTerrainState,
-  handleBikeState,
+  handleMapTypeId,
+  handleRoadViewState,
 } = slice.actions;
 export default slice.reducer;
 
@@ -129,11 +120,7 @@ export const selectLevel = (state: RootState) => state.mapSlice.level;
 export const selectLatitude = (state: RootState) => state.mapSlice.latitude;
 export const selectLongitude = (state: RootState) => state.mapSlice.longitude;
 export const selectMaptype = (state: RootState) => state.mapSlice.maptype;
+export const selectMapTypeIds = (state: RootState) => state.mapSlice.mapTypeIds;
 
-export const selectTrafficState = (state: RootState) =>
-  state.mapSlice.trafficState;
-export const selectUsedistrictState = (state: RootState) =>
-  state.mapSlice.usedistrictState;
-export const selectTerrainState = (state: RootState) =>
-  state.mapSlice.terrainState;
-export const selectBikeState = (state: RootState) => state.mapSlice.bikeState;
+export const selectRoadViewState = (state: RootState) =>
+  state.mapSlice.roadViewState;

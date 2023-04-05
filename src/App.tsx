@@ -3,19 +3,19 @@ import { useAppSelector } from "./app/hooks";
 import ZoomControl from "./features/control/zoomControl";
 import Map from "./features/viewMap";
 import {
-  selectBikeState,
   selectLatitude,
   selectLevel,
   selectLongitude,
   selectMaptype,
-  selectTerrainState,
-  selectTrafficState,
-  selectUsedistrictState,
+  selectMapTypeIds,
+  selectRoadViewState,
 } from "./features/viewMap/mapSlice";
 import currentLocation from "./utils/currentLocation";
 import MapTypeControl from "./features/control/mapTypeControl";
-import { memo } from "react";
+import { memo, useRef, useState } from "react";
 import LayerControl from "./features/control/layerControl";
+import RoadControl from "./features/control/roadControl";
+import MapTypeId from "./features/viewMap/MapTypeId";
 
 const App = () => {
   currentLocation();
@@ -32,17 +32,10 @@ const App = () => {
   // 지도가 일반뷰일지, 스카이뷰일지를 나타냅니다.
   const maptype = useAppSelector(selectMaptype);
 
-  // 교통정보 상태
-  const trafficState = useAppSelector(selectTrafficState);
+  const mapTypeIds = useAppSelector(selectMapTypeIds);
 
-  // 지적편집도 상태
-  const usedistrictState = useAppSelector(selectUsedistrictState);
-
-  // 지형도 상태
-  const terrainState = useAppSelector(selectTerrainState);
-
-  // 자전거 상태
-  const bikeState = useAppSelector(selectBikeState);
+  // 로드뷰 상태
+  const roadViewState = useAppSelector(selectRoadViewState);
 
   if (!(latitude && latitude)) {
     return <div>Loading...</div>;
@@ -63,14 +56,16 @@ const App = () => {
         }}
         level={level} // 지도의 확대 레벨
         maptype={maptype}
-        trafficState={trafficState}
-        usedistrictState={usedistrictState}
-        terrainState={terrainState}
-        bikeState={bikeState}
-      />
+        roadViewState={roadViewState}
+      >
+        {mapTypeIds.map((mapTypeId) => (
+          <MapTypeId type={mapTypeId} key={mapTypeId} />
+        ))}
+      </Map>
       <MapTypeControl />
       <LayerControl />
       <ZoomControl />
+      <RoadControl />
     </Container>
   );
 };
