@@ -2,7 +2,7 @@ import React, { memo, ReactNode, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../app/hooks";
 
-import { setLevel } from "./mapSlice";
+// import { setLevel } from "./mapSlice";
 
 interface Props {
   center: Center;
