@@ -5,6 +5,7 @@ type SliceState = {
   level: number;
   latitude: number;
   longitude: number;
+  map: kakao.maps.Map | null;
   maptype: boolean;
   roadViewState: boolean;
   mapTypeIds: kakao.maps.MapTypeId[];
@@ -14,6 +15,7 @@ const initialState: SliceState = {
   level: 3,
   latitude: 0,
   longitude: 0,
+  map: null,
   maptype: true,
   roadViewState: false,
   mapTypeIds: [],
@@ -50,6 +52,10 @@ const slice = createSlice({
     // 경도 설정
     setLongitude(state, { payload }: PayloadAction<number>) {
       state.longitude = payload;
+    },
+
+    handleMap(state, { payload }: PayloadAction<kakao.maps.Map>) {
+      state.map = payload;
     },
 
     // 지도뷰 설정
@@ -109,6 +115,7 @@ export const {
   setLevel,
   setLatitude,
   setLongitude,
+  handleMap,
   showRoadmap,
   showSkymap,
   handleMapTypeId,
@@ -119,6 +126,8 @@ export default slice.reducer;
 export const selectLevel = (state: RootState) => state.mapSlice.level;
 export const selectLatitude = (state: RootState) => state.mapSlice.latitude;
 export const selectLongitude = (state: RootState) => state.mapSlice.longitude;
+
+export const selectMap = (state: RootState) => state.mapSlice.map;
 export const selectMaptype = (state: RootState) => state.mapSlice.maptype;
 export const selectMapTypeIds = (state: RootState) => state.mapSlice.mapTypeIds;
 
