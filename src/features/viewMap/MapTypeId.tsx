@@ -1,21 +1,21 @@
 import React, { memo, useEffect } from "react";
 import { useAppSelector } from "../../app/hooks";
-import { selectMapTypeIds } from "./mapSlice";
+import { selectMap } from "./mapSlice";
 
 interface Props {
   type: kakao.maps.MapTypeId;
 }
 
 const MapTypeId: React.FC<Props> = ({ type }) => {
-  const mapTypeIds = useAppSelector(selectMapTypeIds);
+  const map = useAppSelector(selectMap);
 
   useEffect(() => {
-    mapTypeIds.forEach((mapTypeId) => {
-      window.map.addOverlayMapTypeId(mapTypeId);
-    });
+    if (map) {
+      map.addOverlayMapTypeId(type);
 
-    return () => window.map.removeOverlayMapTypeId(type);
-  });
+      return () => map.removeOverlayMapTypeId(type);
+    }
+  }, [map, type]);
 
   return null;
 };
