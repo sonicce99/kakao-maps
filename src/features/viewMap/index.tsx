@@ -1,6 +1,7 @@
 import React, { memo, ReactNode, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { useAppDispatch } from "../../app/hooks";
+import { handleMap } from "./mapSlice";
 
 // import { setLevel } from "./mapSlice";
 
@@ -50,7 +51,7 @@ const Map: React.FC<Props> = ({
 
       // 지도 객체 생성
       const map = new kakao.maps.Map(ref.current, options);
-      window.map = map;
+      dispatch(handleMap(map));
 
       // kakao.maps.event.addListener(map, "zoom_changed", function () {
       //   // 지도의 현재 레벨을 얻어옵니다
